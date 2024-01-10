@@ -10,11 +10,27 @@ on: workflow_dispatch
   #   types: [opened, synchronize, reopened]
 
 jobs:
-  registerpackage1:
-    name: Register Package1
+
+  registerartifact:
+    name: Register Artifact
     runs-on: ubuntu-latest
     steps:
-      - name: ServiceNow Register Package 1
+    - name: Checkout
+      uses: actions/checkout@v4.0.0
+    - name: ServiceNow Register Artifact
+      uses: ServiceNow/servicenow-devops-register-artifact@v2.0.0
+      with:
+          devops-integration-token: ${{ secrets.SN_DEVOPS_INTEGRATION_TOKEN }}
+          instance-url: ${{ secrets.SN_INSTANCE_URL }}
+          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+          context-github: ${{ toJSON(github) }}
+          job-name: 'Register Artifact'
+          artifacts: '[{"name": "app-devops-feature-test1b04046d.jar","version": "4.0.0","semanticVersion": "4.0.0","repositoryName": "ArunKumarReddy407/Now_DevOps_CI_repo1"}]'
+  registerpackage:
+    name: Register Package
+    runs-on: ubuntu-latest
+    steps:
+      - name: ServiceNow Register Package 
         uses: ServiceNow/servicenow-devops-register-package@v2.0.0
         with:
           devops-integration-token: ${{ secrets.SN_DEVOPS_INTEGRATION_TOKEN }}
@@ -25,25 +41,11 @@ jobs:
           artifacts: '[{"name": "repo1-artifact1-feature-test1-b5899d0.jar","version": "4.0.0","semanticVersion": "4.0.0","repositoryName": "ArunKumarReddy407/Now_DevOps_CI_repo1"}]'
           package-name: 'saran-test-app-devops-change-velocity-1.war'
 
-  registerpackage2:
-    name: Register Package2
-    needs: registerpackage1
-    runs-on: ubuntu-latest
-    steps:
-      - name: ServiceNow Register Package 2
-        uses: ServiceNow/servicenow-devops-register-package@v2.0.0
-        with:
-          devops-integration-token: ${{ secrets.SN_DEVOPS_INTEGRATION_TOKEN }}
-          instance-url: ${{ secrets.SN_INSTANCE_URL }}
-          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
-          context-github: ${{ toJSON(github) }}
-          job-name: 'Register Package2'
-          artifacts: '[{"name": "app-devops-feature-test1b04046d.jar","version": "4.0.0","semanticVersion": "4.0.0","repositoryName": "ArunKumarReddy407/Now_DevOps_CI_repo1"}]'
-          package-name: 'saran-test-app-devops-change-velocity-2.war'
+  
 
   changereq:
     name: ChangeRequest
-    needs: registerpackage2
+    needs: registerpackage
     runs-on: ubuntu-latest
     steps:     
       - name: ServiceNow Change

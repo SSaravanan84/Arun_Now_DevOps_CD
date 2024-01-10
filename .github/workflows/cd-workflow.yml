@@ -25,7 +25,7 @@ jobs:
           artifacts: '[{"name": "repo1-artifact1-feature-test1-b5899d0.jar","version": "4.0.0","semanticVersion": "4.0.0","repositoryName": "ArunKumarReddy407/Now_DevOps_CI_repo1"}]'
           package-name: 'saran-test-app-devops-change-velocity-1.war'
 
-registerpackage2:
+  registerpackage2:
     name: Register Package2
     needs: registerpackage1
     runs-on: ubuntu-latest
@@ -41,7 +41,7 @@ registerpackage2:
           artifacts: '[{"name": "app-devops-feature-test1b04046d.jar","version": "4.0.0","semanticVersion": "4.0.0","repositoryName": "ArunKumarReddy407/Now_DevOps_CI_repo1"}]'
           package-name: 'saran-test-app-devops-change-velocity-2.war'
 
-changereq:
+  changereq:
     name: ChangeRequest
     needs: registerpackage2
     runs-on: ubuntu-latest

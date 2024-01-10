@@ -24,8 +24,8 @@ jobs:
           tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
           context-github: ${{ toJSON(github) }}
           job-name: 'Register Package'
-          artifacts: '[{"name": "repo1-artifact1-feature-test1-b5899d0.jar","version": "4.0.0","semanticVersion": "4.0.0","repositoryName": "ArunKumarReddy407/Now_DevOps_CI_repo1"}]'
-          package-name: 'saran-test-app-devops-change-velocity-1.war'
+          artifacts: '[{"name": "repo1-artifact1-develop-bd27e32.jar","version": "4.0.0","semanticVersion": "4.0.0","repositoryName": "ArunKumarReddy407/Now_DevOps_CI_repo1"}]'
+          package-name: 'saran-test-app-devops-change-velocity.war'
 
   
 

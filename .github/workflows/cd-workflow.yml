@@ -31,6 +31,20 @@ jobs:
              cirepo1=$(cat release/comp1/repo1-release-4* | grep -i repo | cut -d ":" -f2)
              echo "repo1= $(echo $cirepo1)" >> "$GITHUB_ENV"
 
+             art2=$(cat release/comp2/repo2-release-4.0.0 | grep -i artifact | cut -d ":" -f2)
+             echo $art2
+             echo "artifact2=$(echo $art2)"  >> "$GITHUB_ENV"
+
+
+             ver2=$(cat release/comp2/repo2-release-4* | grep -i version | cut -d ":" -f2)
+             echo "version2= $(echo $ver2)" >> "$GITHUB_ENV"
+             
+             semantic2=$(cat release/comp2/repo2-release-4* | grep -i semanticVersion | cut -d ":" -f2)
+             echo "semanticVersion2= $(echo $semantic2)" >> "$GITHUB_ENV"
+             
+             cirepo2=$(cat release/comp2/repo2-release-4* | grep -i repo | cut -d ":" -f2)
+             echo "repo2= $(echo $cirepo2)" >> "$GITHUB_ENV"
+
          
                 
       - name: ServiceNow Register Package 
@@ -41,8 +55,11 @@ jobs:
           tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
           context-github: ${{ toJSON(github) }}
           job-name: 'Register Package'
-          artifacts: '[{"name": "${{ env.artifact1 }}.jar","version":"${{ env.version1}}","semanticVersion": "${{ env.semanticVersion1}}","repositoryName": "${{ env.repo1}}"'
-          package-name: 'saran-test-app-devops-change-velocity.war'
+           artifacts: 
+                    '[{"name": "${{ env.artifact1 }}","version": "${{ env.version1}}","semanticVersion": "${{ env.semanticVersion1}}","repositoryName": "${{ env.repo1}}"},{"name": "${{ env.artifact2 }},"version": "${{ env.version2}}","semanticVersion":  "${{ env.semanticVersion2}}","repositoryName": "${{ env.repo2}}"}]'
+          package-name: 'saran-test-app-devops-chg-velo-${{ github.run_number }}.war'
+
+        
 
   
 

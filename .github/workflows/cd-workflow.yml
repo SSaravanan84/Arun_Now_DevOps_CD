@@ -23,13 +23,13 @@ jobs:
 
 
              ver1=$(cat release/comp1/repo1-release-4* | grep version | cut -d ":" -f2 | tr -d " ")
-             echo "version1= $(echo $ver1)" >> "$GITHUB_ENV"
+             echo "version1=$(echo $ver1)" >> "$GITHUB_ENV"
              
              semantic1=$(cat release/comp1/repo1-release-4* | grep -i semanticVersion | cut -d ":" -f2 | tr -d " ")
-             echo "semanticVersion1= $(echo $semantic1)" >> "$GITHUB_ENV"
+             echo "semanticVersion1=$(echo $semantic1)" >> "$GITHUB_ENV"
              
              cirepo1=$(cat release/comp1/repo1-release-4* | grep -i repo | cut -d ":" -f2)
-             echo "repo1= $(echo $cirepo1)" >> "$GITHUB_ENV"
+             echo "repo1=$(echo $cirepo1)" >> "$GITHUB_ENV"
 
              art2=$(cat release/comp2/repo2-release-4.0.0 | grep -i artifact | cut -d ":" -f2)
              echo $art2
@@ -37,13 +37,13 @@ jobs:
 
 
              ver2=$(cat release/comp2/repo2-release-4* | grep version | cut -d ":" -f2 | tr -d " ")
-             echo "version2= $(echo $ver2)" >> "$GITHUB_ENV"
+             echo "version2=$(echo $ver2)" >> "$GITHUB_ENV"
              
              semantic2=$(cat release/comp2/repo2-release-4* | grep -i semanticVersion | cut -d ":" -f2 | tr -d " ")
-             echo "semanticVersion2= $(echo $semantic2)" >> "$GITHUB_ENV"
+             echo "semanticVersion2=$(echo $semantic2)" >> "$GITHUB_ENV"
              
              cirepo2=$(cat release/comp2/repo2-release-4* | grep -i repo | cut -d ":" -f2)
-             echo "repo2= $(echo $cirepo2)" >> "$GITHUB_ENV"
+             echo "repo2=$(echo $cirepo2)" >> "$GITHUB_ENV"
 
          
                 
@@ -57,7 +57,7 @@ jobs:
           job-name: 'Register Package'
           artifacts: 
                     '[{"name": "${{ env.artifact1 }}","version": "${{ env.version1}}","semanticVersion": "${{ env.semanticVersion1}}","repositoryName": "${{ env.repo1}}"},{"name": "${{ env.artifact2 }}","version": "${{ env.version2}}","semanticVersion":  "${{ env.semanticVersion2}}","repositoryName": "${{ env.repo2}}"}]'
-          package-name: 'saran-test-app-devops-chg-velo-${{ env.version1}}.war'
+          package-name: 'saran-test-app-devops-chg-velo-${{env.version1}}.war'
 
         
 

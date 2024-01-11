@@ -16,7 +16,8 @@ jobs:
         run: |
              git clone https://.:${{ secrets.BUILD_REPO_PERSONAL_ACCESS_TOKEN }}@github.com/ArunKumarReddy407/buildmetadata target
              cd target
-             echo $(cat release/comp1/repo1-release-4* | grep -i artifact | cut -d ":" -f2)
+             artifact1=echo $(cat release/comp1/repo1-release-4* | grep -i artifact | cut -d ":" -f2)
+             echo "artifactid1=$(echo $artifact1)"  >> "$GITHUB_ENV"
              echo "artifact1=$(cat release/comp1/repo1-release-4* | grep -i artifact | cut -d ":" -f2)" >> "$GITHUB_ENV"
              echo "version1=$(cat release/comp1/repo1-release-4* | grep -i version | cut -d ":" -f2)" >> "$GITHUB_ENV"
              echo "semanticVersion1=$(cat release/comp1/repo1-release-4* | grep -i semanticVersion | cut -d ":" -f2)" >> "$GITHUB_ENV"

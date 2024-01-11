@@ -16,14 +16,14 @@ jobs:
         run: |
              git clone https://.:${{ secrets.BUILD_REPO_PERSONAL_ACCESS_TOKEN }}@github.com/ArunKumarReddy407/buildmetadata target
              cd target
-             echo "artifact1=$(cat release/comp1/repo1-release-4.0.0 | grep -i artifact | cut -d ":" -f2)" >> "$GITHUB_ENV"
-             echo "version1=$(cat release/comp1/repo1-release-4.0.0 | grep -i version | cut -d ":" -f2)" >> "$GITHUB_ENV"
-             echo "semanticVersion1=$(cat release/comp1/repo1-release-4.0.0 | grep -i semanticVersion | cut -d ":" -f2)" >> "$GITHUB_ENV"
-             echo "repo1=$(cat release/comp1/repo1-release-4.0.0 | grep -i repo | cut -d ":" -f2)" >> "$GITHUB_ENV"
-             echo "artifact2=$(cat release/comp2/repo2-release-4.0.0 | grep -i artifact | cut -d ":" -f2)" >> "$GITHUB_ENV"
-             echo "version2=$(cat release/comp2/repo2-release-4.0.0 | grep -i version | cut -d ":" -f2)" >> "$GITHUB_ENV"
-             echo "semanticVersion2=$(cat release/comp2/repo2-release-4.0.0 | grep -i semanticVersion | cut -d ":" -f2)" >> "$GITHUB_ENV"
-             echo "repo2=$(cat release/comp2/repo2-release-4.0.0 | grep -i repo | cut -d ":" -f2)" >> "$GITHUB_ENV"
+             echo "artifact1=$(cat release/comp1/repo1-release-4* | grep -i artifact | cut -d ":" -f2)" >> "$GITHUB_ENV"
+             echo "version1=$(cat release/comp1/repo1-release-4* | grep -i version | cut -d ":" -f2)" >> "$GITHUB_ENV"
+             echo "semanticVersion1=$(cat release/comp1/repo1-release-4* | grep -i semanticVersion | cut -d ":" -f2)" >> "$GITHUB_ENV"
+             echo "repo1=$(cat release/comp1/repo1-release-4* | grep -i repo | cut -d ":" -f2)" >> "$GITHUB_ENV"
+             echo "artifact2=$(cat release/comp2/repo2-release-4* | grep -i artifact | cut -d ":" -f2)" >> "$GITHUB_ENV"
+             echo "version2=$(cat release/comp2/repo2-release-4* | grep -i version | cut -d ":" -f2)" >> "$GITHUB_ENV"
+             echo "semanticVersion2=$(cat release/comp2/repo2-release-4* | grep -i semanticVersion | cut -d ":" -f2)" >> "$GITHUB_ENV"
+             echo "repo2=$(cat release/comp2/repo2-release-4* | grep -i repo | cut -d ":" -f2)" >> "$GITHUB_ENV"
                 
       - name: ServiceNow Register Package 
         uses: ServiceNow/servicenow-devops-register-package@v2.0.0

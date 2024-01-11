@@ -1,25 +1,3 @@
-Skip to content
-ArunKumarReddy407
-/
-Now_DevOps_CD
-
-Type / to search
-
-Code
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-Settings
-CD GitHub workflow
-CD GitHub workflow #34
-Jobs
-Run details
-Workflow file for this run
-.github/workflows/cd-workflow.yml at e63cc40
-# This workflow uses ServiceNow custom actions that are certified by ServiceNow.
 
 name: CD GitHub workflow
 
@@ -40,11 +18,14 @@ jobs:
       - name: Clone metada repo
         run: |
              git clone https://.:${{ secrets.BUILD_REPO_PERSONAL_ACCESS_TOKEN }}@github.com/ArunKumarReddy407/buildmetadata target
-             cd target
-             file=$(ls -l | head -1)
-             echo $file
-             echo "artifact=$(cat release/comp1/$file | cut -d "." -f1)" >> "$GITHUB_ENV"
-             echo $artifact 
+             echo "artifact1=$(cat release/comp1/*-release-4.0.0 | grep -i artifact | cut -d ":" -f2)" >> "$GITHUB_ENV"
+             echo "version1=$(cat release/comp1/*-release-4.0.0 | grep -i version | cut -d ":" -f2)" >> "$GITHUB_ENV"
+             echo "semanticVersion1=$(cat release/comp1/*-release-4.0.0 | grep -i semanticVersion | cut -d ":" -f2)" >> "$GITHUB_ENV"
+             echo "repo1=$(cat release/comp1/*-release-4.0.0 | grep -i repo | cut -d ":" -f2)" >> "$GITHUB_ENV"
+             echo "artifact2=$(cat release/comp2/*-release-4.0.0 | grep -i artifact | cut -d ":" -f2)" >> "$GITHUB_ENV"
+             echo "version2=$(cat release/comp2/*-release-4.0.0 | grep -i version | cut -d ":" -f2)" >> "$GITHUB_ENV"
+             echo "semanticVersion2=$(cat release/comp2/*-release-4.0.0 | grep -i semanticVersion | cut -d ":" -f2)" >> "$GITHUB_ENV"
+             echo "repo2=$(cat release/comp2/*-release-4.0.0 | grep -i repo | cut -d ":" -f2)" >> "$GITHUB_ENV"
                 
       - name: ServiceNow Register Package 
         uses: ServiceNow/servicenow-devops-register-package@v2.0.0
@@ -54,7 +35,7 @@ jobs:
           tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
           context-github: ${{ toJSON(github) }}
           job-name: 'Register Package'
-          artifacts: '[{"name": "${{ env.artifact }}.jar","version": "4.0.0","semanticVersion": "4.0.0","repositoryName": "ArunKumarReddy407/Now_DevOps_CI_repo1"}]'
+          artifacts: '[{"name": "${{ env.artifact1 }}.jar","version":"${{ env.version1}}","semanticVersion": "${{ env.semanticVersion1}}","repositoryName": "${{ env.repo1}}"'
           package-name: 'saran-test-app-devops-change-velocity.war'
 
   

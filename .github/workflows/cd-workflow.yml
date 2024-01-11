@@ -1,3 +1,24 @@
+Skip to content
+ArunKumarReddy407
+/
+Now_DevOps_CD
+
+Type / to search
+
+Code
+Pull requests
+Actions
+Projects
+Wiki
+Security
+Insights
+Settings
+CD GitHub workflow
+CD GitHub workflow #34
+Jobs
+Run details
+Workflow file for this run
+.github/workflows/cd-workflow.yml at e63cc40
 # This workflow uses ServiceNow custom actions that are certified by ServiceNow.
 
 name: CD GitHub workflow
@@ -10,11 +31,22 @@ on: workflow_dispatch
   #   types: [opened, synchronize, reopened]
 
 jobs:
+
+
   registerpackage:
     name: Register Package
     runs-on: ubuntu-latest
     steps:
-      - name: ServiceNow Register Package 1
+      - name: Clone metada repo
+        run: |
+             git clone https://.:${{ secrets.BUILD_REPO_PERSONAL_ACCESS_TOKEN }}@github.com/ArunKumarReddy407/buildmetadata target
+             cd target
+             file=$(ls -l | head -1)
+             echo $file
+             echo "artifact=$(cat release/comp1/$file | cut -d "." -f1)" >> "$GITHUB_ENV"
+             echo $artifact 
+                
+      - name: ServiceNow Register Package 
         uses: ServiceNow/servicenow-devops-register-package@v2.0.0
         with:
           devops-integration-token: ${{ secrets.SN_DEVOPS_INTEGRATION_TOKEN }}
@@ -22,10 +54,10 @@ jobs:
           tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
           context-github: ${{ toJSON(github) }}
           job-name: 'Register Package'
-          artifacts: '[{"name": "repo2-artifact2-ab79886.jar","version": "4.0.0","semanticVersion": "4.0.0","repositoryName": "ArunKumarReddy407/Now_DevOps_CI_repo1"}]'
-          package-name: 'saran-test-app-devops-chg-velo-${{ github.run_number }}.war'
-          
+          artifacts: '[{"name": "${{ env.artifact }}.jar","version": "4.0.0","semanticVersion": "4.0.0","repositoryName": "ArunKumarReddy407/Now_DevOps_CI_repo1"}]'
+          package-name: 'saran-test-app-devops-change-velocity.war'
 
+  
 
   changereq:
     name: ChangeRequest
@@ -57,3 +89,4 @@ jobs:
     steps:
     - name: Run deployment scripts
       run: echo 'Deployment step in progress...'
+Update cd-workflow.yml · ArunKumarReddy407/Now_DevOps_CD@e63cc40

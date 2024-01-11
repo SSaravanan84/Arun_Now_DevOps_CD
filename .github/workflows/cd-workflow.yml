@@ -22,7 +22,7 @@ jobs:
              echo "artifact1=$(echo $art1)"  >> "$GITHUB_ENV"
 
 
-             ver1=$(cat release/comp1/repo1-release-4* | grep -i version | cut -d ":" -f2)
+             ver1=$(cat release/comp1/repo1-release-4* | grep  version | cut -d ":" -f2)
              echo "version1= $(echo $ver1)" >> "$GITHUB_ENV"
              
              semantic1=$(cat release/comp1/repo1-release-4* | grep -i semanticVersion | cut -d ":" -f2)
@@ -36,7 +36,7 @@ jobs:
              echo "artifact2=$(echo $art2)"  >> "$GITHUB_ENV"
 
 
-             ver2=$(cat release/comp2/repo2-release-4* | grep -i version | cut -d ":" -f2)
+             ver2=$(cat release/comp2/repo2-release-4* | grep version | cut -d ":" -f2)
              echo "version2= $(echo $ver2)" >> "$GITHUB_ENV"
              
              semantic2=$(cat release/comp2/repo2-release-4* | grep -i semanticVersion | cut -d ":" -f2)

@@ -60,8 +60,8 @@ jobs:
           context-github: ${{ toJSON(github) }}
           job-name: 'Register Package'
           artifacts: 
-                    '[{"name": "${{ env.artifact1 }}","version": "${{ env.version1}}","semanticVersion": "${{ env.semanticVersion1}}","repositoryName": "${{ env.repo1}}"},{"name": "${{ env.artifact2 }}","version": "${{ env.version2}}","semanticVersion":  "${{ env.semanticVersion2}}","repositoryName": "${{ env.repo2}}"}]'
-          package-name: 'saran-test-app-devops-chg-velo-${{env.version1}}.war'
+                    '[{"name": "${{ env.artifact1 }}","version": "${{ env.version1}}","semanticVersion": "${{ env.semanticVersion1}}","repositoryName": "${{ env.repo1}}"},{"name": "${{ env.artifact2 }}","version": "${{ env.version2}}","semanticVersion":  "${{ env.semanticVersion2}}","repositoryName": "${{ env.repo2}}"},{"name": "${{ env.artifact3 }}","version": "${{ env.version3 }}","semanticVersion":  "${{ env.semanticVersion3 }}","repositoryName": "${{ env.repo3}}"} ]'
+          package-name: 'saran-test-app-devops-chg-velo-${{env.version1},}.war'
 
         
 

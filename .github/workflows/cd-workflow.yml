@@ -47,7 +47,7 @@ jobs:
              #echo "semanticVersion2=$(echo $semantic2)" >> "$GITHUB_ENV"
              
              #cirepo2=$(cat release/app2/app2-comp2-release-7.0.0 | grep -i arun | cut -d ":" -f2)
-             #echo "repo2=$(echo $cirepo2)" >> "$GITHUB_ENV"
+             #echo "repo2=$(echo $cirepo2)" >> "$GITHUB_ENV" 
 
          
                 

@@ -16,33 +16,37 @@ jobs:
         run: |
              git clone https://.:${{ secrets.BUILD_REPO_PERSONAL_ACCESS_TOKEN }}@github.com/ArunKumarReddy407/buildmetadata target
              cd target
+             a=1
+             for i in `grep -iR"4.0.0" release/* | cut -d ":" -f1`
+             do
+               art1=$(cat $i | grep -i artifact | cut -d ":" -f2)
+               echo $art1
+               echo "artifact$a=$(echo $art1)"  >> "$GITHUB_ENV"
+               
+               ver1=$(cat release/app1/app1-comp1-release-7.0.0 | grep version | cut -d ":" -f2 | tr -d " ")
+               echo "version$a=$(echo $ver1)" >> "$GITHUB_ENV"
              
-             art1=$(cat release/app1/app1-comp1-release-7.0.0 | grep -i artifact | cut -d ":" -f2)
-             echo $art1
-             echo "artifact1=$(echo $art1)"  >> "$GITHUB_ENV"
+               semantic1=$(cat release/app1/app1-comp1-release-7.0.0 | grep -i semanticVersion | cut -d ":" -f2 | tr -d " ")
+               echo "semanticVersion$a=$(echo $semantic1)" >> "$GITHUB_ENV"
+             
+               cirepo1=$(cat release/app1/app1-comp1-release-7.0.0 | grep -i arun | cut -d ":" -f2)
+               echo "repo$a=$(echo $cirepo1)" >> "$GITHUB_ENV"
 
+               a=$((a + 1))
+             done
 
-             ver1=$(cat release/app1/app1-comp1-release-7.0.0 | grep version | cut -d ":" -f2 | tr -d " ")
-             echo "version1=$(echo $ver1)" >> "$GITHUB_ENV"
-             
-             semantic1=$(cat release/app1/app1-comp1-release-7.0.0 | grep -i semanticVersion | cut -d ":" -f2 | tr -d " ")
-             echo "semanticVersion1=$(echo $semantic1)" >> "$GITHUB_ENV"
-             
-             cirepo1=$(cat release/app1/app1-comp1-release-7.0.0 | grep -i arun | cut -d ":" -f2)
-             echo "repo1=$(echo $cirepo1)" >> "$GITHUB_ENV"
+             #art2=$(cat release/app2/app2-comp2-release-7.0.0 | grep -i artifact | cut -d ":" -f2)
+             #echo $art2
+             #echo "artifact2=$(echo $art2)"  >> "$GITHUB_ENV"
 
-             art2=$(cat release/app2/app2-comp2-release-7.0.0 | grep -i artifact | cut -d ":" -f2)
-             echo $art2
-             echo "artifact2=$(echo $art2)"  >> "$GITHUB_ENV"
-
-             ver2=$(cat release/app2/app2-comp2-release-7.0.0 | grep version | cut -d ":" -f2 | tr -d " ")
-             echo "version2=$(echo $ver2)" >> "$GITHUB_ENV"
+             #ver2=$(cat release/app2/app2-comp2-release-7.0.0 | grep version | cut -d ":" -f2 | tr -d " ")
+             #echo "version2=$(echo $ver2)" >> "$GITHUB_ENV"
              
-             semantic2=$(cat release/app2/app2-comp2-release-7.0.0 | grep -i semanticVersion | cut -d ":" -f2 | tr -d " ")
-             echo "semanticVersion2=$(echo $semantic2)" >> "$GITHUB_ENV"
+             #semantic2=$(cat release/app2/app2-comp2-release-7.0.0 | grep -i semanticVersion | cut -d ":" -f2 | tr -d " ")
+             #echo "semanticVersion2=$(echo $semantic2)" >> "$GITHUB_ENV"
              
-             cirepo2=$(cat release/app2/app2-comp2-release-7.0.0 | grep -i arun | cut -d ":" -f2)
-             echo "repo2=$(echo $cirepo2)" >> "$GITHUB_ENV"
+             #cirepo2=$(cat release/app2/app2-comp2-release-7.0.0 | grep -i arun | cut -d ":" -f2)
+             #echo "repo2=$(echo $cirepo2)" >> "$GITHUB_ENV"
 
          
                 

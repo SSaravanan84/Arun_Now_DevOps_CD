@@ -17,19 +17,19 @@ jobs:
              git clone https://.:${{ secrets.BUILD_REPO_PERSONAL_ACCESS_TOKEN }}@github.com/ArunKumarReddy407/buildmetadata target
              cd target
              a=1
-             for i in `grep -iR"4.0.0" release/* | cut -d ":" -f1`
+             for i in `grep -iR "7.0.0" release/* | cut -d ":" -f1`
              do
                art1=$(cat $i | grep -i artifact | cut -d ":" -f2)
                echo $art1
                echo "artifact$a=$(echo $art1)"  >> "$GITHUB_ENV"
                
-               ver1=$(cat release/app1/app1-comp1-release-7.0.0 | grep version | cut -d ":" -f2 | tr -d " ")
+               ver1=$(cat $i | grep version | cut -d ":" -f2 | tr -d " ")
                echo "version$a=$(echo $ver1)" >> "$GITHUB_ENV"
              
-               semantic1=$(cat release/app1/app1-comp1-release-7.0.0 | grep -i semanticVersion | cut -d ":" -f2 | tr -d " ")
+               semantic1=$(cat $i | grep -i semanticVersion | cut -d ":" -f2 | tr -d " ")
                echo "semanticVersion$a=$(echo $semantic1)" >> "$GITHUB_ENV"
              
-               cirepo1=$(cat release/app1/app1-comp1-release-7.0.0 | grep -i arun | cut -d ":" -f2)
+               cirepo1=$(cat $i | grep -i arun | cut -d ":" -f2)
                echo "repo$a=$(echo $cirepo1)" >> "$GITHUB_ENV"
 
                a=$((a + 1))

@@ -19,6 +19,7 @@ jobs:
              a=1
              for i in `grep -iR "7.0.0" release/* | cut -d ":" -f1`
              do
+               echo $i
                art1=$(cat $i | grep -i artifact | cut -d ":" -f2)
                echo $art1
                echo "artifact$a=$(echo $art1)"  >> "$GITHUB_ENV"

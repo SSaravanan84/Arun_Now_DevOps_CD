@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Clone metada repo
         run: |
-             git clone https://.:${{ secrets.BUILD_REPO_PERSONAL_ACCESS_TOKEN }}@github.com/ArunKumarReddy407/buildmetadata target
+             git clone https://.:${{ secrets.BUILD_REPO_PERSONAL_ACCESS_TOKEN }}@github.com/SSaravanan84/buildmetadata target
              cd target
              a=1
              for i in `grep -iR "7.0.0" release/* | grep -v semantic | cut -d ":" -f1`

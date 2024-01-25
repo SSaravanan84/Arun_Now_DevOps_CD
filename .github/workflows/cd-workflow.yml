@@ -1,5 +1,3 @@
-# This workflow uses ServiceNow custom actions that are certified by ServiceNow.
-
 name: CD GitHub workflow
 
 on: workflow_dispatch
@@ -14,7 +12,46 @@ jobs:
     name: Register Package
     runs-on: ubuntu-latest
     steps:
-      - name: ServiceNow Register Package 1
+      - name: Clone metada repo
+        run: |
+             git clone https://.:${{ secrets.BUILD_REPO_PERSONAL_ACCESS_TOKEN }}@github.com/SSaravanan84/buildmetadata target
+             cd target
+             a=1
+             for i in `grep -iR "13.0.0" release/* | grep -v semantic | cut -d ":" -f1`
+             do
+               echo $i
+               art1=$(cat $i | grep -i artifact | cut -d ":" -f2)
+               echo $art1
+               echo "artifact$a=$(echo $art1)"  >> "$GITHUB_ENV"
+               
+               ver1=$(cat $i | grep version | cut -d ":" -f2 | tr -d " ")
+               echo "version$a=$(echo $ver1)" >> "$GITHUB_ENV"
+             
+               semantic1=$(cat $i | grep -i semanticVersion | cut -d ":" -f2 | tr -d " ")
+               echo "semanticVersion$a=$(echo $semantic1)" >> "$GITHUB_ENV"
+             
+               cirepo1=$(cat $i | grep -i arun | cut -d ":" -f2)
+               echo "repo$a=$(echo $cirepo1)" >> "$GITHUB_ENV"
+
+               a=$((a + 1))
+             done
+
+             #art2=$(cat release/app2/app2-comp2-release-7.0.0 | grep -i artifact | cut -d ":" -f2)
+             #echo $art2
+             #echo "artifact2=$(echo $art2)"  >> "$GITHUB_ENV"
+
+             #ver2=$(cat release/app2/app2-comp2-release-7.0.0 | grep version | cut -d ":" -f2 | tr -d " ")
+             #echo "version2=$(echo $ver2)" >> "$GITHUB_ENV"
+             
+             #semantic2=$(cat release/app2/app2-comp2-release-7.0.0 | grep -i semanticVersion | cut -d ":" -f2 | tr -d " ")
+             #echo "semanticVersion2=$(echo $semantic2)" >> "$GITHUB_ENV"
+             
+             #cirepo2=$(cat release/app2/app2-comp2-release-7.0.0 | grep -i arun | cut -d ":" -f2)
+             #echo "repo2=$(echo $cirepo2)" >> "$GITHUB_ENV" 
+
+         
+                
+      - name: ServiceNow Register Package 
         uses: ServiceNow/servicenow-devops-register-package@v2.0.0
         with:
           devops-integration-token: ${{ secrets.SN_DEVOPS_INTEGRATION_TOKEN }}
@@ -22,10 +59,13 @@ jobs:
           tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
           context-github: ${{ toJSON(github) }}
           job-name: 'Register Package'
-          artifacts: '[{"name": "repo2-artifact2-ab79886.jar","version": "4.0.0","semanticVersion": "4.0.0","repositoryName": "ArunKumarReddy407/Now_DevOps_CI_repo1"}]'
-          package-name: 'saran-test-app-devops-chg-velo-${{ github.run_number }}.war'
-          
+          artifacts: 
+                    '[{"name": "${{ env.artifact1 }}","version": "${{ env.version1}}","semanticVersion": "${{ env.semanticVersion1}}","repositoryName": "${{ env.repo1}}"},{"name": "${{ env.artifact2 }}","version": "${{ env.version2}}","semanticVersion":  "${{ env.semanticVersion2}}","repositoryName": "${{ env.repo2}}"},{"name": "${{ env.artifact3 }}","version": "${{ env.version3 }}","semanticVersion":  "${{ env.semanticVersion3 }}","repositoryName": "${{ env.repo3}}"} ]'
+          package-name: 'saran-test-app-devops-chg-velo-${{env.version1}}.war'
 
+        
+
+  
 
   changereq:
     name: ChangeRequest
@@ -40,7 +80,7 @@ jobs:
           tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
           context-github: ${{ toJSON(github) }}
           job-name: 'ChangeRequest'
-          change-request: '{"setCloseCode":"true","autoCloseChange":true,"attributes":{"short_description":"DevOps Change Request Testing","description":"Automated Software Deployment.","assignment_group":"a715cd759f2002002920bde8132e7018","implementation_plan":"Software update is tested and results can be found in Test Summaries Tab; When the change is approved the implementation happens automated by the CICD pipeline within the change planned start and end time window.","backout_plan":"When software fails in production, the previous software release will be re-deployed.","test_plan":"Testing if the software was successfully deployed"}}'
+          change-request: '{"setCloseCode":"true","autoCloseChange":true,"attributes":{"assignment_group":"0a52d3dcd7011200f2d224837e6103f2","short_description":"DevOps Application Deployment for the application referred in the CI","cmdb_ci":"6d43d89b97ab7110faaff84de053af14"}}'
           interval: '100'
           timeout: '3600'
           changeCreationTimeOut: '3600'
@@ -57,3 +97,4 @@ jobs:
     steps:
     - name: Run deployment scripts
       run: echo 'Deployment step in progress...'
+
